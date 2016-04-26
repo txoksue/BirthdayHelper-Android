@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">BirthdayHelper</string>
+    <string name="action_configurar_felicitaciones">Configurar felicitaciones</string>
+    <string name="contactSaveSuccess">Contacto guardado correctamente</string>
+    <string name="errorSavingContact">Error guardando el contacto</string>
+    <string name="titleNotification">Hoy es el cumpleaños de:</string>
+    <string name="label_send_sms">Aviso: Enviar SMS</string>
+    <string name="lbl_notification">Aviso: Sólo notificación</string>
+</resources>
