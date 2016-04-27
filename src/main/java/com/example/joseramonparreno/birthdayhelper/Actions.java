@@ -22,9 +22,9 @@ public class Actions{
 
 
     /*********************************************************************
-     * Método que coge todos los contactos de la agenda del móvil
-     * @param contentResolver - Content Resolver para acceder a la agenda 
-     * @return - Lista de contactos
+     * Método que coge todos los contactos de la agenda.
+     * @param contentResolver - Content Resolver para acceder a la agenda.
+     * @return - Lista de contactos.
      *********************************************************************/
 
 
@@ -82,7 +82,7 @@ public class Actions{
 
     /*********************************************************************
      * Método que recupera la foto que tiene un contacto en la agenda.
-     * @param contentResolver - Content Resolver para acceder a la agenda
+     * @param contentResolver - Content Resolver para acceder a la agenda.
      * @param contact - Contacto para buscar su foto.
      * @return - Bitmap con la foto del contacto.
      *********************************************************************/
