@@ -21,10 +21,11 @@ public class Actions{
     public static final String ACTIONS_LOG = "Actions";
 
 
-    /** Metodo que coge todos los contactos de la aplicacion
-     * @param contentResolver
-     * @return
-     */
+    /*********************************************************************
+     * Método que coge todos los contactos de la agenda del móvil
+     * @param contentResolver - Content Resolver para acceder a la agenda 
+     * @return - Lista de contactos
+     *********************************************************************/
 
 
     public static ArrayList<Contact> getAllContactsMobile (ContentResolver contentResolver){
@@ -79,11 +80,12 @@ public class Actions{
     }
 
 
-    /**
-     * @param contentResolver
-     * @param contact
-     * @return
-     */
+    /******************************************************************
+     * Método que recupera la foto que un contacto tiene en la agenda.
+     * @param contentResolver - Content Resolver para acceder a la agenda
+     * @param contact - Contacto para buscar su foto.
+     * @return - Bitmap con la foto del contacto.
+     ******************************************************************/
 
     public static Bitmap getImageContactMobile(ContentResolver contentResolver, Contact contact){
 
