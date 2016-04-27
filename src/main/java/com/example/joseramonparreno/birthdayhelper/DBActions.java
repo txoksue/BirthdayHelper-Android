@@ -362,8 +362,6 @@ public class DBActions {
 
         this.dataBaseApp.execSQL("UPDATE miscumples SET Nombre = '" + contact.getName() + "', Telefono = '" + contact.getPhone() + "', TipoNotif = '" + contact.getNotificationId() + "', FechaNacimiento = '" + contact.getDOB() + "', Mensaje = '" + contact.getMessage() + "' WHERE ID = " + contact.getID());
 
-        Log.i(DBACTIONS_LOG, "Contact details have been saved successfuly.");
-
     }
 
 
