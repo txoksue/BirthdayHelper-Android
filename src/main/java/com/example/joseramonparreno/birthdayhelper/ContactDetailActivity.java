@@ -229,13 +229,13 @@ public class ContactDetailActivity extends AppCompatActivity implements CheckBox
 
             Toast.makeText(getApplicationContext(), R.string.contactSaveSuccess, Toast.LENGTH_SHORT).show();
 
-            Log.i(CONTACT_DETAIL_ACTIVITY_LOG, "Contact has been sent successfuly.");
+            Log.i(CONTACT_DETAIL_ACTIVITY_LOG, "Contact has been saved successfuly.");
 
         } catch (SQLException e) {
 
             Toast.makeText(getApplicationContext(), R.string.errorSavingContact, Toast.LENGTH_SHORT).show();
 
-            Log.e(CONTACT_DETAIL_ACTIVITY_LOG, "ERROR. Contact has not been sent." + e.getMessage());
+            Log.e(CONTACT_DETAIL_ACTIVITY_LOG, "ERROR. Contact has not been saved." + e.getMessage());
 
             e.printStackTrace();
 
