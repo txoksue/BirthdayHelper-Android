@@ -53,13 +53,20 @@ public class DBActions {
     public void updateContactsDB (ContentResolver contentResolver) {
 
         ArrayList<Contact> listAllContactsMobile = new ArrayList<>(actions.getAllContactsMobile(contentResolver));
-        ArrayList<ContactDB> listAllContactsDB = new ArrayList<>(this.getAllContactsDB(this.dataBaseApp, contentResolver));
 
-        this.searchNewContactsMobile(listAllContactsMobile, listAllContactsDB);
-        this.searchContactsMobileDeleted(listAllContactsMobile, listAllContactsDB);
-        this.searchAnyContactDataUpdated(listAllContactsMobile, listAllContactsDB);
+        try {
 
-        Log.i(DBACTIONS_LOG,"Contacts database has been updated successfuly.");
+            ArrayList<ContactDB> listAllContactsDB = new ArrayList<>(this.getAllContactsDB(this.dataBaseApp, contentResolver));
+            this.searchNewContactsMobile(listAllContactsMobile, listAllContactsDB);
+            this.searchContactsMobileDeleted(listAllContactsMobile, listAllContactsDB);
+            this.searchAnyContactDataUpdated(listAllContactsMobile, listAllContactsDB);
+
+            Log.i(DBACTIONS_LOG, "Contacts database has been updated successfuly.");
+
+        } catch (SQLException e) {
+
+            Log.e(DBACTIONS_LOG, "ERROR. Contacts database has not been updated." + e.getMessage());
+        }
 
     }
 
@@ -109,8 +116,6 @@ public class DBActions {
         } catch (SQLException e) {
 
             Log.e(DBACTIONS_LOG, "ERROR. New contact has not been added. " + e.getMessage());
-
-            e.printStackTrace();
 
         }
 
@@ -171,8 +176,6 @@ public class DBActions {
         } catch (SQLException e) {
 
             Log.e(DBACTIONS_LOG, "ERROR. Contact has not been deleted. " + e.getMessage());
-
-            e.printStackTrace();
 
         }
 
@@ -253,8 +256,6 @@ public class DBActions {
 
             Log.e(DBACTIONS_LOG, "ERROR. Contact has not been updated. " + e.getMessage());
 
-            e.printStackTrace();
-
         }
 
     }
@@ -267,7 +268,7 @@ public class DBActions {
      * @return - Lista con todos los contactos de la BBDD.
      *******************************************************/
 
-    public ArrayList<ContactDB> getAllContactsDB (SQLiteDatabase dataBaseApp, ContentResolver contentResolver){
+    public ArrayList<ContactDB> getAllContactsDB (SQLiteDatabase dataBaseApp, ContentResolver contentResolver) throws SQLException{
 
         ArrayList<ContactDB> listContactsDB = new ArrayList<>();
 

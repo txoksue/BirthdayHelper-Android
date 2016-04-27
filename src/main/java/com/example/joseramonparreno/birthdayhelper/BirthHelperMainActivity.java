@@ -22,6 +22,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -29,7 +31,6 @@ import java.util.Calendar;
 public class BirthHelperMainActivity extends AppCompatActivity implements ListView.OnItemClickListener {
 
     public ListView listViewContacts;
-    public TextView txtSearchContact;
     public SQLiteDatabase dataBaseApp;
     public ContactsDBAdapter adapter;
     public ArrayList<ContactDB> listContactsDB;
@@ -63,7 +64,6 @@ public class BirthHelperMainActivity extends AppCompatActivity implements ListVi
         mainActivityContext = getApplicationContext();
 
         listViewContacts = (ListView) findViewById(R.id.listContacts);
-        txtSearchContact = (TextView) findViewById(R.id.txtSearchContact);
 
         contentResolver = getContentResolver();
 
@@ -223,16 +223,26 @@ public class BirthHelperMainActivity extends AppCompatActivity implements ListVi
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            
+
             //No recibimos ningún dato de entrada, no lo necesitamos.
 
             Log.i(BIRTHHELPER_MAIN_ACTIVITY_LOG, "Asynchronous call to update contacts database.");
 
-            /*Primero actualizamos la BBDD y luego cogemos todos los contactos 
-              para poder rellenar el adapter de la listView.*/
+            try {
 
-            actionsDB.updateContactsDB(contentResolver);
-            listContactsDB = actionsDB.getAllContactsDB(dataBaseApp, contentResolver);
+                /*Primero actualizamos la BBDD y luego cogemos todos los contactos
+                  para poder rellenar el adapter de la listView.*/
+
+                actionsDB.updateContactsDB(contentResolver);
+
+                listContactsDB = actionsDB.getAllContactsDB(dataBaseApp, contentResolver);
+
+            } catch (SQLException e) {
+
+                Log.e(BIRTHHELPER_MAIN_ACTIVITY_LOG, "ERROR. Asynchronous call to update contacts database failed.");
+
+                return false;
+            }
 
             return true;
 
@@ -269,7 +279,16 @@ public class BirthHelperMainActivity extends AppCompatActivity implements ListVi
 
             Log.i(BIRTHHELPER_MAIN_ACTIVITY_LOG, "Asynchronous call to get all contacts database.");
 
-            listContactsDB = actionsDB.getAllContactsDB(dataBaseApp, contentResolver);
+            try {
+
+                listContactsDB = actionsDB.getAllContactsDB(dataBaseApp, contentResolver);
+
+            } catch (SQLException e) {
+
+                Log.e(BIRTHHELPER_MAIN_ACTIVITY_LOG, "ERROR. Asynchronous call to get all contacts database failed." + e.getMessage());
+
+                return false;
+            }
 
             return true;
 

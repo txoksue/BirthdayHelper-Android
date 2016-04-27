@@ -1,7 +1,9 @@
 package com.example.joseramonparreno.birthdayhelper;
 
+import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -122,6 +124,13 @@ public class ContactDetailActivity extends AppCompatActivity implements CheckBox
     }
 
 
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -235,12 +244,19 @@ public class ContactDetailActivity extends AppCompatActivity implements CheckBox
 
         } catch (SQLException e) {
 
-            Toast.makeText(getApplicationContext(), R.string.errorSavingContact, Toast.LENGTH_SHORT).show();
-
             Log.e(CONTACT_DETAIL_ACTIVITY_LOG, "ERROR. Contact has not been saved." + e.getMessage());
 
-            e.printStackTrace();
+            AlertDialog alertDialog = new AlertDialog.Builder(ContactDetailActivity.this).create();
+            alertDialog.setTitle("Error");
+            alertDialog.setMessage("Contact has not been saved.");
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
 
+            alertDialog.show();
 
         }
 
