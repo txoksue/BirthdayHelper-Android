@@ -29,18 +29,26 @@ public class ContactsDBAdapter extends ArrayAdapter<ContactDB> {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            // Get the data item for this position
+         
+            //Recogemos el contacto para la posicion pasada.
+            
             ContactDB contact = getItem(position);
-            // Check if an existing view is being reused, otherwise inflate the view
+            
+            //Comprobamos que la fila existente esta siendo usada, y si no es asi hacemos un inflate.
+            
             if (convertView == null) {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_style, parent, false);
             }
-            // Lookup view for data population
+            
+           //Recogemos los componentes del layout de la fila.
+           
             TextView tvName = (TextView) convertView.findViewById(R.id.txvName);
             TextView tvPhone = (TextView) convertView.findViewById(R.id.txvPhone);
             TextView tvTypeNotif = (TextView) convertView.findViewById(R.id.txvNotificaciton);
             ImageView photoContact = (ImageView)convertView.findViewById(R.id.photoContact);
-            // Populate the data into the template view using the data object
+            
+            //Asignamos los valores a mostrar a los componentes del layout.
+            
             tvName.setText(contact.getName());
             tvPhone.setText(contact.getPhone());
             photoContact.setImageBitmap(contact.getPhoto());
@@ -48,14 +56,13 @@ public class ContactsDBAdapter extends ArrayAdapter<ContactDB> {
             if (contact.getNotificationId().equals("1")){
 
                 tvTypeNotif.setText(R.string.label_send_sms);
-
             }else{
-
+             
                 tvTypeNotif.setText(R.string.lbl_notification);
             }
 
-
-            // Return the completed view to render on screen
+            // Devolvemos la fila para pintarla en el listView.
+            
             return convertView;
         }
 }
