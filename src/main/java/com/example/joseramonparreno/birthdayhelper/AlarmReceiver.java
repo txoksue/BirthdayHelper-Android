@@ -14,19 +14,27 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     public static final String ALARM_RECEIVER_LOG = "AlarmReceiver";
 
+
+    /*****************
+     * Constructor
+     * ***************/
+    
     public AlarmReceiver() {
         super();
     }
 
 
-    /**
-     * @param context
-     * @param intent
-     */
+    /***********************************************************
+     * Método onReceive llamado cuando la alarma es establecida
+     * desde BirthdayHelperMainActivity.
+     * @param context - Contexto de la aplicación.
+     * @param intent 
+     ************************************************************/
+     
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        Log.i(ALARM_RECEIVER_LOG, "Receive method.");
+        Log.i(ALARM_RECEIVER_LOG, "onReceive method.");
 
         Intent birthdayService = new Intent(context, BirthdaysService.class);
         context.startService(birthdayService);
