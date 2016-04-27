@@ -59,10 +59,12 @@ public class ContactDetailActivity extends AppCompatActivity implements CheckBox
         setContentView(R.layout.activity_contact_detail);
 
         this.contentResolver = getContentResolver();
+        
+        //Abrimos la BBDD.
 
         this.dataBaseApp = openOrCreateDatabase("BirthDayHelper", Context.MODE_PRIVATE, null);
 
-        Log.i(CONTACT_DETAIL_ACTIVITY_LOG, "Database open or created.");
+        Log.i(CONTACT_DETAIL_ACTIVITY_LOG, "Database open.");
 
         if (actionsDB == null) {
 
@@ -119,13 +121,6 @@ public class ContactDetailActivity extends AppCompatActivity implements CheckBox
 
 
     @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-        // Another interface callback
-    }
-
-
-
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -137,9 +132,10 @@ public class ContactDetailActivity extends AppCompatActivity implements CheckBox
     }
 
 
-    /**
-     * @param v
-     */
+    /*********************************************************
+     * Método que abre la agenda con el contacto seleccionado.
+     * @param v - Botón pulsado
+     *********************************************************/
 
     public void openContactToView (View v){
 
@@ -150,10 +146,12 @@ public class ContactDetailActivity extends AppCompatActivity implements CheckBox
     }
 
 
-    /**
-     * @param intent
-     * @return
-     */
+    /**********************************************************************
+     * Método para recuperar los datos del contacto selecionado que vienen
+     * dentro del Intent enviado desde BirthdayHelpeMainActivity.
+     * @param intent - Intent enviado desde BirthdayHelperMainActivity.
+     * @return - Una instancia de ContactDB con sus datos.
+     **********************************************************************/
     
     public ContactDB getContactFromIntent (Intent intent){
 
@@ -173,10 +171,9 @@ public class ContactDetailActivity extends AppCompatActivity implements CheckBox
     }
 
 
-    /**
-     *
-     */
-
+    /*********************************************
+     * Método que muestra los datos del contacto.
+     *********************************************/
 
     public void displayContact (){
 
@@ -205,9 +202,10 @@ public class ContactDetailActivity extends AppCompatActivity implements CheckBox
     }
 
 
-    /**
-     * @param view
-     */
+    /*******************************************************
+     * Método que guarda los datos del contacto en la BBDD.
+     * @param view - Botón guardar
+     *******************************************************/
 
     public void saveContactDisplayed (View view){
 
@@ -248,9 +246,10 @@ public class ContactDetailActivity extends AppCompatActivity implements CheckBox
     }
 
 
-    /**
-     *
-     */
+    /************************************************************
+     * Método llamado asicronamente para recuperar los teléfonos 
+     * de la agenda del contacto si este tuviera más de uno.
+     **********************************************************/
 
     private class getContactPhonesAsyncTask extends AsyncTask<Void,Void, Boolean> {
 
@@ -266,7 +265,6 @@ public class ContactDetailActivity extends AppCompatActivity implements CheckBox
                 listContactPhones = new ArrayList<>();
 
                 while (cursorPhones.moveToNext()) {
-
 
                     String phoneNumber = cursorPhones.getString(cursorPhones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
 
@@ -297,9 +295,11 @@ public class ContactDetailActivity extends AppCompatActivity implements CheckBox
     }
 
 
-    /**
-     *
-     */
+    /**********************************************************
+     * Método llamado asicronamente para recuperar el contacto 
+     * seleccionado de la agenda, comprobar si ha sido 
+     * modificado y actualizar los datos mostrados.
+     **********************************************************/
 
     private class updateContactDisplayedAsyncTask extends AsyncTask<Void,Void, Boolean> {
 
