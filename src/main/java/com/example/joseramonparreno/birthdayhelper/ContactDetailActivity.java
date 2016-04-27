@@ -256,7 +256,7 @@ public class ContactDetailActivity extends AppCompatActivity implements CheckBox
         @Override
         protected Boolean doInBackground(Void... params) {
 
-            Log.i(CONTACT_DETAIL_ACTIVITY_LOG,"Asynchronous call to get contact's phones from contacts app.");
+            Log.i(CONTACT_DETAIL_ACTIVITY_LOG,"Asynchronous call to get contact's phones from agenda.");
 
             Cursor cursorPhones = contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?", new String[]{String.valueOf(contactSelected.getID())}, null);
 
@@ -308,7 +308,7 @@ public class ContactDetailActivity extends AppCompatActivity implements CheckBox
         @Override
         protected Boolean doInBackground(Void... params) {
 
-            Log.i(CONTACT_DETAIL_ACTIVITY_LOG,"Asynchronous call to get contact update from contacts app.");
+            Log.i(CONTACT_DETAIL_ACTIVITY_LOG,"Asynchronous call to get contact update from agenda.");
 
             Cursor cursor = contentResolver.query(ContactsContract.Contacts.CONTENT_URI, null, ContactsContract.Contacts._ID + " = ?", new String[]{String.valueOf(contactSelected.getID())}, null);
 
