@@ -228,6 +228,9 @@ public class BirthHelperMainActivity extends AppCompatActivity implements ListVi
 
             Log.i(BIRTHHELPER_MAIN_ACTIVITY_LOG, "Asynchronous call to update contacts database.");
 
+            /*Primero actualizamos la BBDD y luego cogemos todos los contactos 
+              para poder rellenar el adapter de la listView.*/
+
             actionsDB.updateContactsDB(contentResolver);
             listContactsDB = actionsDB.getAllContactsDB(dataBaseApp, contentResolver);
 
