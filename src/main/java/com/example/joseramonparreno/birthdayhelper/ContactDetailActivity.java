@@ -60,8 +60,10 @@ public class ContactDetailActivity extends AppCompatActivity implements CheckBox
 
         this.contentResolver = getContentResolver();
         
-        //Abrimos la BBDD.
-
+        /******************
+         * Abrimos la BBDD.
+         ******************/   
+         
         this.dataBaseApp = openOrCreateDatabase("BirthDayHelper", Context.MODE_PRIVATE, null);
 
         Log.i(CONTACT_DETAIL_ACTIVITY_LOG, "Database open.");
