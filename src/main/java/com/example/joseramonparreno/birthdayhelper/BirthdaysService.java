@@ -30,6 +30,7 @@ public class BirthdaysService extends Service{
     HashMap<String,String> listContactsSMS;
 
     public static final String BIRTHDAY_SERVICE_LOG = "BirthdaysService";
+    
     public static final String SELECT_ALL_CONTACTS_SMS = "SELECT * FROM miscumples WHERE TipoNotif = 1";
     public static final String SELECT_ALL_CONTACTS_NOTIFICATION = "SELECT * FROM miscumples WHERE TipoNotif = 2";
 
@@ -41,11 +42,12 @@ public class BirthdaysService extends Service{
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-
-        Log.i(BIRTHDAY_SERVICE_LOG, "Birthdays service bound.");
-        return null;
         
-
+        //Este es un servicio no vinculado, por eso devolvemos null
+        
+        Log.i(BIRTHDAY_SERVICE_LOG, "Birthdays service bound.");
+        
+        return null;
     }
 
     @Override
@@ -57,7 +59,11 @@ public class BirthdaysService extends Service{
         listContactsNotifications = new ArrayList<>();
         listContactsSMS = new HashMap<>();
 
-        databaseApp = openOrCreateDatabase("BirthDayHelper",MODE_PRIVATE, null);
+        /*******************
+         * Abrimos la BBDD.
+         * *****************/
+         
+        this.databaseApp = openOrCreateDatabase("BirthDayHelper",MODE_PRIVATE, null);
 
         Log.i(BIRTHDAY_SERVICE_LOG, "Database open.");
 
@@ -88,27 +94,34 @@ public class BirthdaysService extends Service{
         if (this.listContactsSMS.size() > 0){
 
             this.sendSMS();
-
         }
 
         Log.i(BIRTHDAY_SERVICE_LOG, "Stopping Birthdays service.");
 
+        /**************************************
+         * Una vez que se han enviado los SMS 
+         * y que se ha mostrado la notificación
+         * paramos el servicio.
+         * ************************************/
+         
         stopService(intent);
-
 
         return super.onStartCommand(intent, flags, startId);
 
     }
 
 
-    /**
-     *
-     */
+    /************************************************************************
+     * Método que recupera de la BBDD el nombre de los contactos que cumplen
+     * años hoy y que tienen la notificación como configuración.
+     * **********************************************************************/
 
     public void getContactsForNotification(){
 
         Cursor cursorContacts = databaseApp.rawQuery(SELECT_ALL_CONTACTS_NOTIFICATION, null);
-
+        
+        //Cogemos la fecha actual para comparar día y mes con la fecha de cumpleaños del contacto
+        
         Calendar currentDate = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String dateNow = dateFormat.format(currentDate.getTime());
@@ -133,7 +146,11 @@ public class BirthdaysService extends Service{
 
     }
 
-
+    /*******************************************************
+     * Método que recupera de la BBDD el teléfono y mensaje 
+     * a enviar a los contactos que cumplen años hoy 
+     * y que tienen SMS como configuración.
+     * *****************************************************/
 
     public void getContactsForSMS(){
 
@@ -146,6 +163,7 @@ public class BirthdaysService extends Service{
                 String phone = cursorContacts.getString(COLUMN_PHONE);
                 String message = cursorContacts.getString(COLUMN_MESSAGE);
 
+                // Añadimos el teléfono como key de un HashMap y el mensaje como value.
                 this.listContactsSMS.put(phone, message);
 
             }
@@ -155,7 +173,11 @@ public class BirthdaysService extends Service{
     }
 
 
-
+    /**************************************************************
+     * Método que envia la notificación a mostrar. Diferencia entre
+     * si la notificación va a mostrar un solo contacto o si
+     * va a mostrar varios, con lo que sería una expandible.
+     * ************************************************************/
 
     public void createNotifications(){
 
@@ -210,6 +232,10 @@ public class BirthdaysService extends Service{
 
     }
 
+
+    /*******************************************
+     * Método que envia los SMS a los contactos.
+     * *****************************************/
 
     public void sendSMS(){
 
