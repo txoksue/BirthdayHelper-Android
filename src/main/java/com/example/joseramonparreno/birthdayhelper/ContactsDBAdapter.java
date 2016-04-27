@@ -14,6 +14,13 @@ import java.util.ArrayList;
 /**
  * Created by txoksue on 31/3/16.
  */
+ 
+ /***********************************************************
+  * Custom adapter para poder mostrar los datos del contacto
+  * en la fila del ListView tal como se muestran y para el 
+  * que hemos creado un layout propio llamado row_style.
+  ***********************************************************/
+ 
 public class ContactsDBAdapter extends ArrayAdapter<ContactDB> {
 
         public ContactsDBAdapter(Context context, ArrayList<ContactDB> contactsBD) {
