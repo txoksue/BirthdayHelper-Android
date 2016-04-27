@@ -29,6 +29,10 @@ public class DBActions {
     Actions actions;
     SQLiteDatabase dataBaseApp;
 
+     
+    /**************
+     * Constructor
+     **************/
 
     public DBActions(SQLiteDatabase dataBaseApp) {
         this.dataBaseApp = dataBaseApp;
@@ -36,9 +40,10 @@ public class DBActions {
     }
 
 
-    /**
-     * @param contentResolver
-     */
+    /********************************************************************
+     * Método que actualiza la BBDD con los contactos de la agenda.
+     * @param contentResolver - Content Resolver para llamar a la agenda.
+     ********************************************************************/
 
     public void updateContactsDB (ContentResolver contentResolver) {
 
@@ -49,15 +54,16 @@ public class DBActions {
         this.searchContactsMobileDeleted(listAllContactsMobile, listAllContactsDB);
         this.searchAnyContactDataUpdated(listAllContactsMobile, listAllContactsDB);
 
-        Log.i(DBACTIONS_LOG,"Contacts database has been updated.");
+        Log.i(DBACTIONS_LOG,"Contacts database has been updated successfuly.");
 
     }
 
 
-    /**
-     * @param contactsMobile
-     * @param contactsDB
-     */
+    /**********************************************************************
+     * Método para buscar contactos nuevos en la agenda y añadir a la BBDD.
+     * @param contactsMobile - Contactos de la agenda.
+     * @param contactsDB - Contactos de la BBDD.
+     **********************************************************************/
 
     public void searchNewContactsMobile(ArrayList<Contact> contactsMobile, ArrayList<ContactDB> contactsDB) {
 
@@ -81,7 +87,6 @@ public class DBActions {
                     if (idContactDB == idContactMobile){
 
                         found = true;
-
                     }
                 }
 
@@ -91,28 +96,29 @@ public class DBActions {
 
                     this.insertContact(contactsMobile.get(i));
 
-                    Log.i(DBACTIONS_LOG, "New contact has been added.");
+                    Log.i(DBACTIONS_LOG, "New contact has been added successfuly.");
                 }
 
             }
 
         } catch (SQLException e) {
 
-            Log.e(DBACTIONS_LOG, "New contact has not been added. " + e.getMessage());
+            Log.e(DBACTIONS_LOG, "ERROR. New contact has not been added. " + e.getMessage());
 
             e.printStackTrace();
-
-
 
         }
 
     }
 
 
-    /**
-     * @param contactsMobile
-     * @param contactsDB
-     */
+ 
+    /**********************************************************************
+     * Método para buscar contactos borrados de la agenda para borralos 
+     * también de la BBDD.
+     * @param contactsMobile - Contactos de la agenda.
+     * @param contactsDB - Contactos de la BBDD.
+     **********************************************************************/
 
     public void searchContactsMobileDeleted(ArrayList<Contact> contactsMobile, ArrayList<ContactDB> contactsDB) {
 
@@ -122,7 +128,6 @@ public class DBActions {
         boolean found;
 
         try {
-
 
             for (int i=0; i<numContactsDB; i++) {
 
@@ -152,7 +157,7 @@ public class DBActions {
 
                     this.deleteContact(contactsDB.get(i));
 
-                    Log.i(DBACTIONS_LOG, "Contact has been deleted.");
+                    Log.i(DBACTIONS_LOG, "Contact has been deleted successfuly.");
 
                 }
 
@@ -160,7 +165,7 @@ public class DBActions {
 
         } catch (SQLException e) {
 
-            Log.e(DBACTIONS_LOG, "Contact has not been deleted. " + e.getMessage());
+            Log.e(DBACTIONS_LOG, "ERROR. Contact has not been deleted. " + e.getMessage());
 
             e.printStackTrace();
 
@@ -168,11 +173,13 @@ public class DBActions {
 
     }
 
-
-    /**
-     * @param contactsMobile
-     * @param contactsDB
-     */
+    
+    /**********************************************************************
+     * Método para buscar datos actualizados de los contactos de la agenda
+     * y actualizar la BBDD con ellos.
+     * @param contactsMobile - Contactos de la agenda.
+     * @param contactsDB - Contactos de la BBDD.
+     **********************************************************************/
 
     public void searchAnyContactDataUpdated(ArrayList<Contact> contactsMobile, ArrayList<ContactDB> contactsDB){
 
@@ -237,27 +244,25 @@ public class DBActions {
             }
 
 
-
         } catch (SQLException e) {
 
-            Log.e(DBACTIONS_LOG, "Contact has not been updated. " + e.getMessage());
+            Log.e(DBACTIONS_LOG, "ERROR. Contact has not been updated. " + e.getMessage());
 
             e.printStackTrace();
 
         }
 
-
     }
 
 
-    /**
-     * @param dataBaseApp
-     * @param contentResolver
-     * @return
-     */
+    /*******************************************************
+     * Método para recuperar todos los contactos de la BBDD.
+     * @param dataBaseApp - Base de datos 
+     * @param contentResolver - Content Resolver
+     * @return - Lista con todos los contactos de la BBDD.
+     *******************************************************/
 
     public ArrayList<ContactDB> getAllContactsDB (SQLiteDatabase dataBaseApp, ContentResolver contentResolver){
-
 
         ArrayList<ContactDB> listContactsDB = new ArrayList<>();
 
@@ -290,39 +295,39 @@ public class DBActions {
     }
 
 
-    /**
-     * @param contact
+    /**************************************************
+     * Método que inserta un contacto nuevo en la BBDD.
+     * @param contact - Contacto para insertar.
      * @throws SQLException
-     */
-
+     **************************************************/
 
     public void insertContact (Contact contact) throws SQLException{
 
-
         this.dataBaseApp.execSQL(INSERT_NEW_CONTACT + contact.getID() + ",'" + contact.getPhone() + "','" + contact.getName() + "', TipoNotif = '2')");
-
 
     }
 
 
-    /**
-     * @param contact
+    /******************************************
+     * Método que borra un contacto de la BBDD.
+     * @param contact - Contacto a borrar.
      * @throws SQLException
-     */
+     ******************************************/
 
     public void deleteContact (Contact contact) throws SQLException{
-
 
         this.dataBaseApp.execSQL(DELETE_CONTACT + contact.getID());
 
     }
 
 
-    /**
-     * @param values
-     * @param contact
+    /********************************************************
+     * Método que actualiza datos de un contacto en la BBDD, 
+     * si estos han sido modificados en la agenda.
+     * @param values - Valores para actualizar.
+     * @param contact - Contacto a actualizar.
      * @throws SQLException
-     */
+     ********************************************************/
 
     public void updateContact (HashMap <String, String> values, Contact contact) throws SQLException{
 
@@ -334,30 +339,30 @@ public class DBActions {
             if (name != null){
 
                 this.dataBaseApp.execSQL("UPDATE miscumples SET Nombre = '" + name + "' WHERE ID = " + contact.getID());
-                Log.i(DBACTIONS_LOG, "Contact's name updated.");
+                Log.i(DBACTIONS_LOG, "Contact's name updated successfuly.");
             }
 
            /* if (DOB != null){
 
                 this.dataBaseApp.execSQL("UPDATE miscumples SET FechaNacimiento = '" + DOB + "' WHERE ID = " + contact.getID());
-                Log.i(DBACTIONS_LOG,"Contact's date of birth updated.");
+                Log.i(DBACTIONS_LOG,"Contact's date of birth updated succesfuly.");
             }*/
 
 
     }
 
 
-    /**
-     * @param contact
+    /**********************************************************
+     * Método para guardar los datos de un contacto en la BBDD.
+     * @param contact -  Contacto para guardar.
      * @throws SQLException
-     */
+     ***********************************************************/
 
     public void saveContactDB (ContactDB contact) throws SQLException{
 
-
         this.dataBaseApp.execSQL("UPDATE miscumples SET Nombre = '" + contact.getName() + "', Telefono = '" + contact.getPhone() + "', TipoNotif = '" + contact.getNotificationId() + "', FechaNacimiento = '" + contact.getDOB() + "', Mensaje = '" + contact.getMessage() + "' WHERE ID = " + contact.getID());
 
-        Log.i(DBACTIONS_LOG, "Contact details have been saved.");
+        Log.i(DBACTIONS_LOG, "Contact details have been saved successfuly.");
 
     }
 
