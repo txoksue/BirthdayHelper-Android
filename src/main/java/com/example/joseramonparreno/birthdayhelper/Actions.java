@@ -15,6 +15,12 @@ import java.util.ArrayList;
 /**
  * Created by txoksue on 4/4/16.
  */
+ 
+ /*********************************************
+ * Clase que implementa todos los métodos que
+ * ejecutan alguna acción contra la agenda.
+ *********************************************/
+ 
 public class Actions{
 
 
