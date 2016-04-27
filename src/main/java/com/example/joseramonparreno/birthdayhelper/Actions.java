@@ -41,7 +41,7 @@ public class Actions{
 
         if(cursorContactsMobile.getCount() > 0) {
 
-            Log.i(ACTIONS_LOG, "Getting contact from mobile app.");
+            Log.i(ACTIONS_LOG, "Getting contacts from agenda.");
 
             while (cursorContactsMobile.moveToNext()) {
 
