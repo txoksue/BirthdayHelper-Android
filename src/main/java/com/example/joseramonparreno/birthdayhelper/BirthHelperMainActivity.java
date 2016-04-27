@@ -67,6 +67,11 @@ public class BirthHelperMainActivity extends AppCompatActivity implements ListVi
 
         contentResolver = getContentResolver();
 
+        /************************************
+         * Creamos la BBDD si no está creada 
+         * y si ya lo está, la abrimos.
+         * **********************************/
+
         dataBaseApp = openOrCreateDatabase("BirthDayHelper", Context.MODE_PRIVATE, null);
         dataBaseApp.execSQL(CREATE_DATABASE_BIRTHDAYHELPER);
 
@@ -89,6 +94,7 @@ public class BirthHelperMainActivity extends AppCompatActivity implements ListVi
         new updateContactsDBAsyncTask().execute();
         System.out.println("ON RESUME");
     }*/
+    
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -96,6 +102,7 @@ public class BirthHelperMainActivity extends AppCompatActivity implements ListVi
         getMenuInflater().inflate(R.menu.menu_birth_helper_main, menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -106,7 +113,7 @@ public class BirthHelperMainActivity extends AppCompatActivity implements ListVi
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_configurar_felicitaciones) {
-
+            
             DialogFragment newFragment = new TimePickerFragment();
             newFragment.show(getFragmentManager(), "timePicker");
 
@@ -137,7 +144,6 @@ public class BirthHelperMainActivity extends AppCompatActivity implements ListVi
     }
 
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -150,9 +156,10 @@ public class BirthHelperMainActivity extends AppCompatActivity implements ListVi
 
 
 
-    /**
-     * @param listContactsDB
-     */
+    /*********************************************************************************
+     * Método para cargar el custom adapter del ListView con los contactos de la BBDD.
+     * @param listContactsDB - Lista de contactos recuperados de la BBDD.
+     *********************************************************************************/
 
     public void loadListViewContacts(ArrayList<ContactDB> listContactsDB) {
 
@@ -166,21 +173,22 @@ public class BirthHelperMainActivity extends AppCompatActivity implements ListVi
 
     public static class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
 
-
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Use the current time as the default values for the picker
+            //Recuperamos la hora actual y configurar el time picker con ella.
             final Calendar c = Calendar.getInstance();
             int hour = c.get(Calendar.HOUR_OF_DAY);
             int minute = c.get(Calendar.MINUTE);
 
-
-            // Create a new instance of TimePickerDialog and return it
+            // Creamos una nueva instancia del TimerPickerDialog y la devolvemos.
             return new TimePickerDialog(getActivity(), this, hour, minute, DateFormat.is24HourFormat(getActivity()));
         }
 
 
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+
+            /*Establecemos la alarma para comprobar los cumpleaños del día 
+              seleccionada por el usuario en el time picker.*/
 
             AlarmManager alarmMgr;
             PendingIntent alarmIntent;
@@ -204,15 +212,19 @@ public class BirthHelperMainActivity extends AppCompatActivity implements ListVi
 
     }
 
-    /**
-     *
-     */
+    /*****************************************************************
+     * Método que se ejecuta asincronamente para actualizar los datos
+     * de la BBDD con los de la agenda. Se ejecuta en el onCreate de 
+     * la activity para comprobar si hubo cambios en los contactos de 
+     * la agenda y si los hubo actualizar la BBDD.
+     *****************************************************************/
 
     private class updateContactsDBAsyncTask extends AsyncTask<Void, Void, Boolean> {
 
-
         @Override
         protected Boolean doInBackground(Void... params) {
+            
+            //No recibimos ningún dato de entrada, no lo necesitamos.
 
             Log.i(BIRTHHELPER_MAIN_ACTIVITY_LOG, "Asynchronous call to update contacts database.");
 
@@ -238,12 +250,16 @@ public class BirthHelperMainActivity extends AppCompatActivity implements ListVi
     }
 
 
-    /**
-     *
-     */
+    /********************************************************************
+     * Método que se ejecuta asincronamente para recuperar todos
+     * los contactos de la BBDD. Se ejecuta cuando volvemos de la
+     * activity que muestra los detalles de un contacto seleccionado,
+     * para comprobar si ha habido alguna modificación sobre el contacto.
+     ********************************************************************/
 
     private class getAllContactsDBAsyncTask extends AsyncTask<Void, Void, Boolean> {
-
+    
+        //No recibimos ningún dato de entrada, no lo necesitamos.
 
         @Override
         protected Boolean doInBackground(Void... params) {
@@ -262,9 +278,9 @@ public class BirthHelperMainActivity extends AppCompatActivity implements ListVi
             super.onPostExecute(result);
 
             if (result) {
-
+                
                 loadListViewContacts(listContactsDB);
-
+                
             }
         }
     }
