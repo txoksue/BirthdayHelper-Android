@@ -12,6 +12,12 @@ import java.util.HashMap;
 /**
  * Created by txoksue on 4/4/16.
  */
+ 
+/*********************************************
+ * Clase que implementa todos los métodos que
+ * ejecutan alguna acción contra la BBDD.
+ *********************************************/
+ 
 public class DBActions {
 
     public static final String DBACTIONS_LOG = "DBActions";
@@ -28,7 +34,6 @@ public class DBActions {
 
     Actions actions;
     SQLiteDatabase dataBaseApp;
-
      
     /**************
      * Constructor
@@ -363,7 +368,6 @@ public class DBActions {
         this.dataBaseApp.execSQL("UPDATE miscumples SET Nombre = '" + contact.getName() + "', Telefono = '" + contact.getPhone() + "', TipoNotif = '" + contact.getNotificationId() + "', FechaNacimiento = '" + contact.getDOB() + "', Mensaje = '" + contact.getMessage() + "' WHERE ID = " + contact.getID());
 
     }
-
 
 }
 
