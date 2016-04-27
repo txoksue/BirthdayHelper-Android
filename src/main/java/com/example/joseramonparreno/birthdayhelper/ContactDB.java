@@ -3,6 +3,12 @@ package com.example.joseramonparreno.birthdayhelper;
 /**
  * Created by txoksue on 31/3/16.
  */
+ 
+/*************************
+ * Clase para un contacto
+ * de la BBDD.
+ *************************/
+ 
 public class ContactDB extends Contact{
 
     public String notificationId;
