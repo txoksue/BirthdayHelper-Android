@@ -205,7 +205,7 @@ public class BirthHelperMainActivity extends AppCompatActivity implements ListVi
             alarmMgr = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
             alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, alarmIntent);
 
-            Log.i(BIRTHHELPER_MAIN_ACTIVITY_LOG, "Alarm has been set.");
+            Log.i(BIRTHHELPER_MAIN_ACTIVITY_LOG, "Alarm has been set successfuly.");
 
         }
 
