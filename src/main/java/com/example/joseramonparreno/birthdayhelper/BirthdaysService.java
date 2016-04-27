@@ -14,6 +14,7 @@ import android.telephony.SmsManager;
 import android.util.Log;
 
 
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -67,8 +68,16 @@ public class BirthdaysService extends Service{
 
         Log.i(BIRTHDAY_SERVICE_LOG, "Database open.");
 
-        this.getContactsForNotification();
-        this.getContactsForSMS();
+        try {
+
+            this.getContactsForNotification();
+            this.getContactsForSMS();
+
+        } catch (SQLException e) {
+
+            Log.i(BIRTHDAY_SERVICE_LOG, "ERROR. Getting notification details failed." + e.getMessage());
+        }
+
 
     }
 
@@ -116,7 +125,7 @@ public class BirthdaysService extends Service{
      * años hoy y que tienen la notificación como configuración.
      * **********************************************************************/
 
-    public void getContactsForNotification(){
+    public void getContactsForNotification() throws SQLException{
 
         Cursor cursorContacts = databaseApp.rawQuery(SELECT_ALL_CONTACTS_NOTIFICATION, null);
         
@@ -152,7 +161,7 @@ public class BirthdaysService extends Service{
      * y que tienen SMS como configuración.
      * *****************************************************/
 
-    public void getContactsForSMS(){
+    public void getContactsForSMS() throws SQLException{
 
         Cursor cursorContacts = databaseApp.rawQuery(SELECT_ALL_CONTACTS_SMS, null);
 
@@ -258,8 +267,6 @@ public class BirthdaysService extends Service{
         } catch (Exception e) {
 
                 Log.e(BIRTHDAY_SERVICE_LOG, "ERROR. SMS has not been sent. " + e.getMessage());
-
-                e.printStackTrace();
         }
     }
 }
