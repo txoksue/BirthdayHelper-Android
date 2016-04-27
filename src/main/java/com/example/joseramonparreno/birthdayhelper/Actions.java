@@ -80,12 +80,12 @@ public class Actions{
     }
 
 
-    /******************************************************************
-     * Método que recupera la foto que un contacto tiene en la agenda.
+    /*********************************************************************
+     * Método que recupera la foto que tiene un contacto en la agenda.
      * @param contentResolver - Content Resolver para acceder a la agenda
      * @param contact - Contacto para buscar su foto.
      * @return - Bitmap con la foto del contacto.
-     ******************************************************************/
+     *********************************************************************/
 
     public static Bitmap getImageContactMobile(ContentResolver contentResolver, Contact contact){
 
