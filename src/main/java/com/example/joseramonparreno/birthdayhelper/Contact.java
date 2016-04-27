@@ -6,7 +6,7 @@ import android.graphics.Bitmap;
  * Created by txoksue on 2/4/16.
  */
  
- /************************
+/*************************
  * Clase para un contacto
  * de la agenda.
  *************************/
