@@ -9,19 +9,10 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_birth_helper_main" tools:context=".BirthHelperMain">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtSearchContact"
-        android:width="350dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/listContacts"
-        android:layout_below="@+id/txtSearchContact"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         android:fastScrollAlwaysVisible="true"
@@ -35,8 +26,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/timePicker"
         android:layout_alignTop="@+id/listContacts"
-        android:layout_alignRight="@+id/txtSearchContact"
-        android:layout_alignEnd="@+id/txtSearchContact"
-        android:visibility="invisible"/>
+        android:visibility="invisible"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
