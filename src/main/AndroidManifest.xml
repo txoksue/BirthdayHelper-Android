@@ -3,6 +3,7 @@
     package="com.example.joseramonparreno.birthdayhelper" >
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <!-- Permiso añadido para la alarma -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.SEND_SMS"/>
 
